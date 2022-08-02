@@ -1,84 +1,79 @@
+import { motion, useAnimation } from 'framer-motion'
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { useRef } from 'react'
+import { useButton } from 'react-aria'
+
+const Button = () => {
+  const ref = useRef(null)
+  const { buttonProps } = useButton(
+    {
+      onPressStart: () => {
+        controls.stop()
+        controls.set({
+          scale: 0.95,
+          color: '#e5e5e5',
+          borderColor: '#b45309',
+          '--bc': '#b45309'
+        })
+      },
+      onPressEnd: () => {
+        controls.start({
+          scale: 1.0,
+          color: '#fff',
+          borderColor: '#f59e0b',
+          '--bc': '#f59e0b',
+          transition: { duration: 0.2 }
+        })
+      }
+    },
+    ref
+  )
+  const controls = useAnimation()
+  return (
+    <>
+      <motion.button
+        ref={ref}
+        animate={controls}
+        className="test relative border-2 border-amber-500 p-4 text-white font-semibold focus:outline-none touch-none select-none"
+        style={{
+          '--bc': '#f59e0b',
+          WebkitTapHighlightColor: 'transparent'
+        }}
+        {...(buttonProps as any)}
+      >
+        New Log
+      </motion.button>
+      <style jsx global>{`
+        .test {
+          background: linear-gradient(45deg, var(--bc) 0px 10px, transparent 0)
+              bottom left / 50% 50%,
+            linear-gradient(-45deg, var(--bc) 0px 10px, transparent 0) bottom
+              right / 50% 50%,
+            linear-gradient(135deg, var(--bc) 0px 10px, transparent 0) top left /
+              50% 50%,
+            linear-gradient(-135deg, var(--bc) 0px 10px, transparent 0) top
+              right / 50% 50%,
+            #171717;
+          background-origin: border-box;
+          background-repeat: no-repeat;
+
+          -webkit-mask: linear-gradient(45deg, transparent 0 8px, #fff 0) bottom
+              left,
+            linear-gradient(-45deg, transparent 0 8px, #fff 0) bottom right,
+            linear-gradient(135deg, transparent 0 8px, #fff 0) top left,
+            linear-gradient(-135deg, transparent 0 8px, #fff 0) top right;
+          -webkit-mask-size: 50.5% 50.5%;
+          -webkit-mask-repeat: no-repeat;
+        }
+      `}</style>
+    </>
+  )
+}
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
+    <div className="p-16 bg-neutral-900 h-screen">
+      <Button />
     </div>
   )
 }

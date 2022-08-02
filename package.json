@@ -6,8 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "framer-motion": "6.5.1",
     "next": "latest",
     "react": "18.1.0",
+    "react-aria": "3.18.0",
     "react-dom": "18.1.0"
   },
   "devDependencies": {
