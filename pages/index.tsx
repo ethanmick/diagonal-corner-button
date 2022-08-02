@@ -13,7 +13,7 @@ const Button = () => {
           scale: 0.95,
           color: '#e5e5e5',
           borderColor: '#b45309',
-          '--bc': '#b45309'
+          ...{ '--bc': '#b45309' }
         })
       },
       onPressEnd: () => {
@@ -21,7 +21,7 @@ const Button = () => {
           scale: 1.0,
           color: '#fff',
           borderColor: '#f59e0b',
-          '--bc': '#f59e0b',
+          ...{ '--bc': '#f59e0b' },
           transition: { duration: 0.2 }
         })
       }
